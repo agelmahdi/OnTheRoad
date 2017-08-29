@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="10dp">
+
+    <TextView
+        android:id="@+id/p_s_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dr Mahmoud Ismail"
+        android:textColor="#040404"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
+    <!-- Artist Name -->
+    <TextView
+        android:id="@+id/p_name"
+        android:layout_width="220dp"
+        android:layout_height="32dp"
+        android:layout_below="@id/p_s_name"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="2dp"
+        android:text="Help Me "
+        android:textColor="#343434"
+        android:textSize="12sp" />
+
+    <!-- Rightend Duration -->
+    <TextView
+        android:id="@+id/p_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@id/p_s_name"
+        android:layout_marginEnd="5dp"
+        android:gravity="end"
+        android:text="5:45"
+        android:textColor="#10bcc9"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/priorityTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/p_phone"
+        android:layout_below="@+id/p_s_name"
+        android:layout_weight="1"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/p_s_name"
+        android:layout_toStartOf="@+id/p_phone"
+
+        android:src="@mipmap/ic_text"
+        android:visibility="invisible"
+         />
+
+    <TextView
+        android:id="@+id/p_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/p_name"
+        android:layout_marginEnd="5dp"
+        android:layout_toStartOf="@+id/priorityTextView"
+        android:gravity="end"
+        android:text="Fci, Zag, Egypt"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+
+</RelativeLayout>

@@ -1,0 +1,48 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        config {
+            keyAlias 'key'
+            keyPassword 'google12@'
+            storeFile file('C:/Users/Ahmed El-Mahdi/Desktop/OnTheRoad/keystore.jks')
+            storePassword 'google12@'
+        }
+    }
+    compileSdkVersion 26
+    buildToolsVersion "26.0.0"
+    defaultConfig {
+        applicationId "com.graduation.a3ltreq.ontheroad"
+        minSdkVersion 17
+        targetSdkVersion 26
+        multiDexEnabled true
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
+    compile 'com.android.support:support-v4:26.0.0-alpha1'
+    compile 'com.android.support:design:26.0.0-alpha1'
+    compile 'com.google.android.gms:play-services:11.0.4'
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.android.volley:volley:1.0.0'
+    compile 'com.google.firebase:firebase-ads:11.0.4'
+    compile 'com.google.firebase:firebase-messaging:11.0.4'
+    compile 'com.google.firebase:firebase-core:11.0.4'
+    testCompile 'junit:junit:4.12'
+}
+apply plugin: 'com.google.gms.google-services'

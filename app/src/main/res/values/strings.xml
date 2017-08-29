@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">On The Road</string>
+
+    <!-- Login & Registration -->
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_name">Fullname</string>
+    <string name="btn_login">LOGIN</string>
+    <string name="btn_register">REGISTER</string>
+    <string name="btn_link_to_register">Not a member? Sign up now.</string>
+    <string name="btn_link_to_login">Already registred! Login Me.</string>
+    <string name="welcome">Welcome</string>
+    <string name="btn_logout">LOGOUT</string>
+    <string name="name">Fullname</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="edit_task_description">Leave Help Message...</string>
+    <string name="add_button">Post</string>
+    <string name="add_task_activity_name">Request Pick !</string>
+    <string name="profile_image">User Image</string>
+    <string name="logo">logo</string>
+    <string name="on_the_road">On The Road</string>
+    <string name="show_details">show_details</string>
+    <string name="message">Message</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="no_picks">No Picks To Display!</string>
+    <string name="network_error">Check Network Connection !</string>
+
+
+</resources>

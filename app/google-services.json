@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "592824014253",
+    "firebase_url": "https://on-the-road-ad3a2.firebaseio.com",
+    "project_id": "on-the-road-ad3a2",
+    "storage_bucket": "on-the-road-ad3a2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592824014253:android:283c052d14dccff7",
+        "android_client_info": {
+          "package_name": "com.graduation.a3ltreq.ontheroad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "592824014253-tgllkoi7n7gkatjerl1tpspltu3km56m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.graduation.a3ltreq.ontheroad",
+            "certificate_hash": "7b11af9954978a2446eadce9dd7f93a99a35a74a"
+          }
+        },
+        {
+          "client_id": "592824014253-a84p5qkiktu2606vn1fssnbbpes1p2b1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBY59i26KGwbkvSMhp4z8YT-neVDPvx0iw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "592824014253-a84p5qkiktu2606vn1fssnbbpes1p2b1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

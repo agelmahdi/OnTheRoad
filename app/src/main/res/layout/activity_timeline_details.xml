@@ -97,10 +97,9 @@
         android:src="@mipmap/ic_text"
         android:id="@+id/imageView"
         android:visibility="invisible"
-
         android:layout_below="@+id/name_msg"
         android:layout_alignEnd="@+id/duration_msg"
-        tools:ignore="ContentDescription" />
+        android:contentDescription="@string/show_details" />
 
 
     <TextView

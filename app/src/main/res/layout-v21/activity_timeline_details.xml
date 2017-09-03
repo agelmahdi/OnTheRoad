@@ -101,7 +101,7 @@
 
         android:layout_below="@+id/name_msg"
         android:layout_alignEnd="@+id/duration_msg"
-        tools:ignore="ContentDescription" />
+        android:contentDescription="@string/show_details" />
 
 
     <TextView
@@ -125,7 +125,8 @@
         android:tint="@android:color/white"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        app:fabSize="mini" />
+        app:fabSize="mini"
+        android:contentDescription="@string/send"/>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/text_input"

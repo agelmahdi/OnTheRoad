@@ -11,7 +11,7 @@ import static com.graduation.a3ltreq.ontheroad.helper.TimelineContract.PickEntry
  * Created by Ahmed El-Mahdi on 3/13/2017.
  */
 
-public class SQLiteHandler extends SQLiteOpenHelper {
+class SQLiteHandler extends SQLiteOpenHelper {
 
     private static final String TAG = SQLiteHandler.class.getSimpleName();
 

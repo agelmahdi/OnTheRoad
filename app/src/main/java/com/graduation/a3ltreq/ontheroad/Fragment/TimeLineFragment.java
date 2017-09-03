@@ -31,7 +31,7 @@ public class TimeLineFragment extends Fragment implements
     private static final String TAG = MainActivity.class.getSimpleName();
 
 
-    static final String[] MESSAGES_PROJECTION = {
+    private static final String[] MESSAGES_PROJECTION = {
             TimelineContract.PickEntry.COLUMN_USERS_NAME,
             TimelineContract.PickEntry.COLUMN_MESSAGES,
             TimelineContract.PickEntry.COLUMN_CREATED_AT,
@@ -92,7 +92,7 @@ public class TimeLineFragment extends Fragment implements
         recyclerView.setAdapter(mAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
 
-        FloatingActionButton fabButton = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        FloatingActionButton fabButton =  rootView.findViewById(R.id.fab);
 
         fabButton.setOnClickListener(new View.OnClickListener() {
             @Override

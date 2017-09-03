@@ -11,7 +11,7 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 
 public class TimelineFirebaseInstanceIdService extends FirebaseInstanceIdService {
 
-    private static String LOG_TAG = TimelineFirebaseInstanceIdService.class.getSimpleName();
+    private static final String LOG_TAG = TimelineFirebaseInstanceIdService.class.getSimpleName();
 
     @Override
     public void onTokenRefresh() {

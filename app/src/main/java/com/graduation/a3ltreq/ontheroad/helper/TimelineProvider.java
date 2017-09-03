@@ -8,6 +8,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import static com.graduation.a3ltreq.ontheroad.helper.TimelineContract.PickEntry.TABLE_LOGIN;
@@ -19,10 +20,10 @@ import static com.graduation.a3ltreq.ontheroad.helper.TimelineContract.PickEntry
 
 public class TimelineProvider extends ContentProvider {
 
-    public static final int PICKS = 100;
-    public static final int PICKS_WITH_ID = 101;
-    public static final int USER = 200;
-    public static final int USER_WITH_ID = 201;
+    private static final int PICKS = 100;
+    private static final int PICKS_WITH_ID = 101;
+    private static final int USER = 200;
+    private static final int USER_WITH_ID = 201;
 
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
@@ -30,7 +31,7 @@ public class TimelineProvider extends ContentProvider {
     private SQLiteHandler mPickDbHelper;
 
 
-    public static UriMatcher buildUriMatcher() {
+    private static UriMatcher buildUriMatcher() {
 
         // Initialize a UriMatcher with no matches by passing in NO_MATCH to the constructor
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -59,7 +60,7 @@ public class TimelineProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+    public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 
         // Get access to underlying database (read-only for query)
         final SQLiteDatabase db = mPickDbHelper.getReadableDatabase();
@@ -124,13 +125,13 @@ public class TimelineProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public String getType(Uri uri) {
+    public String getType(@NonNull Uri uri) {
         return null;
     }
 
     @Nullable
     @Override
-    public Uri insert(Uri uri, ContentValues values) {
+    public Uri insert(@NonNull Uri uri, ContentValues values) {
 
         final SQLiteDatabase db = mPickDbHelper.getWritableDatabase();
 
@@ -172,7 +173,7 @@ public class TimelineProvider extends ContentProvider {
     }
 
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
+    public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
         // Get access to the database and write URI matching code to recognize a single item
         final SQLiteDatabase db = mPickDbHelper.getWritableDatabase();
 
@@ -212,7 +213,7 @@ public class TimelineProvider extends ContentProvider {
     }
 
     @Override
-    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+    public int update(@NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         return 0;
     }
 }

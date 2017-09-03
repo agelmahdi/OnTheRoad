@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:focusable="true"
@@ -35,7 +36,6 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/thumbnail"
         android:layout_toEndOf="@+id/thumbnail"
-        android:text="Dr Mahmoud Ismail"
         android:textColor="#040404"
         android:typeface="sans"
         android:textSize="16sp"
@@ -51,7 +51,7 @@
         android:textSize="12sp"
         android:layout_marginTop="1dp"
         android:layout_toEndOf="@+id/thumbnail"
-        android:text="Help Me " />
+    />
 
     <!-- Rightend Duration -->
     <TextView
@@ -61,18 +61,17 @@
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@id/name"
         android:gravity="end"
-        android:text="5:45"
         android:layout_marginEnd="6dp"
         android:textSize="12sp"
         android:textColor="#10bcc9"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        tools:ignore="RelativeOverlap" />
 
 
     <ImageView android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_text"
         android:id="@+id/imageView"
-        android:layout_weight="1"
         android:layout_below="@+id/name"
         android:layout_alignEnd="@+id/duration"
         android:contentDescription="@string/show_details" />
@@ -81,7 +80,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/priorityTextView"
         android:visibility="invisible"
-        android:layout_weight="1"
         android:layout_below="@+id/name"
         android:layout_alignEnd="@+id/duration" />
 
@@ -90,8 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="end"
-        android:text="Fci, Zag, Egypt"
-        android:layout_marginRight="5dip"
+        android:layout_marginEnd="6dp"
         android:textSize="12sp"
         android:textStyle="bold"
         android:layout_below="@+id/imageView"

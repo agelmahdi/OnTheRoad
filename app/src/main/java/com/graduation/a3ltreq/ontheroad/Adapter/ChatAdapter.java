@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import com.graduation.a3ltreq.ontheroad.R;
 import com.graduation.a3ltreq.ontheroad.model.ChatMessage;
+import com.graduation.a3ltreq.ontheroad.model.Provider;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +21,7 @@ import java.util.List;
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> {
     private final ArrayList<ChatMessage> mChat;
 
-    private Context mContext;
+    private final Context mContext;
 
     public ChatAdapter(ArrayList<ChatMessage> mChat, Context mContext) {
         this.mChat = mChat;
@@ -54,6 +54,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
         mChat.addAll(chatMessages);
         notifyDataSetChanged();
     }
+    public ArrayList<ChatMessage> getMessages() {
+        return mChat;
+    }
 
     @Override
     public int getItemCount() {
@@ -61,7 +64,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, description, duration;
+        public final TextView name;
+        public final TextView description;
+        public final TextView duration;
 
         public MyViewHolder(View itemView) {
             super(itemView);

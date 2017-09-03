@@ -20,7 +20,7 @@ import java.util.List;
 public class ProviderAdapter extends RecyclerView.Adapter<ProviderAdapter.MyViewHolder> {
     private final ArrayList<Provider> mPrvider;
 
-    private Context mContext;
+    private final Context mContext;
 
     public ProviderAdapter(ArrayList<Provider> mPrvider, Context context) {
         this.mPrvider = mPrvider;
@@ -55,7 +55,10 @@ public class ProviderAdapter extends RecyclerView.Adapter<ProviderAdapter.MyView
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, description, duration, location;
+        public final TextView name;
+        public final TextView description;
+        public final TextView duration;
+        public final TextView location;
         public final View mView;
 
         public MyViewHolder(View itemView) {

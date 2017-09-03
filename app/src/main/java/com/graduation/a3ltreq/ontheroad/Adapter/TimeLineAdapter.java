@@ -11,8 +11,6 @@ import android.widget.TextView;
 import com.graduation.a3ltreq.ontheroad.R;
 import com.graduation.a3ltreq.ontheroad.Fragment.TimeLineFragment;
 
-import java.text.SimpleDateFormat;
-
 /**
  * Created by Ahmed El-Mahdi on 2/25/2017.
  */
@@ -20,7 +18,7 @@ import java.text.SimpleDateFormat;
 public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.MyViewHolder> {
 
     private Cursor mCursor;
-    private Context mContext;
+    private final Context mContext;
 
     private final TimelineAdapterOnClickHandler mClickHandler;
 
@@ -79,7 +77,11 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.MyView
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView name, description, duration, location, priorityView;
+        public final TextView name;
+        public final TextView description;
+        public final TextView duration;
+        public final TextView location;
+        public TextView priorityView;
 
         public MyViewHolder(View itemView) {
             super(itemView);

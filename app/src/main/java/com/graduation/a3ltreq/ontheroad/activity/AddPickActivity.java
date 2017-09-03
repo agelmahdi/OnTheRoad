@@ -33,13 +33,11 @@ public class AddPickActivity extends AppCompatActivity {
 
     private static final String TAG = AddPickActivity.class.getSimpleName();
 
-    private Date date;
     private ProgressDialog pDialog;
 
 
 
     private EditText message;
-    private Button mButton;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +45,11 @@ public class AddPickActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_pick);
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
-        date = new Date();
+        Date date = new Date();
         message = (EditText) findViewById(R.id.editTextTaskDescription);
 
 
-        mButton = (Button) findViewById(R.id.addButton);
+        Button mButton = (Button) findViewById(R.id.addButton);
         mButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
 
@@ -61,7 +59,7 @@ public class AddPickActivity extends AppCompatActivity {
                 String input = message.getText().toString();
 
                 if (!input.isEmpty() && !id.isEmpty()) {
-                    TimelineAddPick(id, input, "30", "31");
+                    TimelineAddPick(id, input);
                 } else {
                     Toast.makeText(getApplicationContext(),
                             "Please enter your details!", Toast.LENGTH_LONG)
@@ -72,7 +70,7 @@ public class AddPickActivity extends AppCompatActivity {
 
     }
 
-    private void TimelineAddPick(final String id, final String message, final String lat, final String lng) {
+    private void TimelineAddPick(final String id, final String message) {
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
@@ -84,7 +82,7 @@ public class AddPickActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(String response) {
-                Log.d(TAG, "Register Response: " + response.toString());
+                Log.d(TAG, R.string.response + response);
                 hideDialog();
 
                 try {
@@ -92,7 +90,7 @@ public class AddPickActivity extends AppCompatActivity {
                     int error = jObj.getInt("status");
                     if (error == 200) {
 
-                        Toast.makeText(AddPickActivity.this, "Pick successfully Posted!.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(AddPickActivity.this, R.string.posted, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(
                                 AddPickActivity.this,
                                 MainActivity.class);
@@ -114,7 +112,7 @@ public class AddPickActivity extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Post Error: " + error.getMessage());
+                Log.e(TAG, R.string.error + error.getMessage());
                 Toast.makeText(AddPickActivity.this,
                         error.getMessage(), Toast.LENGTH_LONG).show();
                 hideDialog();
@@ -123,11 +121,11 @@ public class AddPickActivity extends AppCompatActivity {
 
             @Override
             protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("u_id", id);
                 params.put("problem", message);
-                params.put("lat", lat);
-                params.put("lng", lng);
+                params.put("lat", "30");
+                params.put("lng", "31");
                 return params;
             }
 

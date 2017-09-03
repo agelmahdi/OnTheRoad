@@ -11,7 +11,7 @@ import org.json.JSONObject;
  */
 public class ChatMessage implements Parcelable {
 
-    protected ChatMessage(Parcel in) {
+    private ChatMessage(Parcel in) {
         id = in.readInt();
         messageText = in.readString();
         messageUser = in.readString();

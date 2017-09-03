@@ -13,9 +13,9 @@ public class TimelineContract {
 
     public static final String AUTHORITY = "com.graduation.a3ltreq.ontheroad";
 
-    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
+    private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 
-    public static final String PATH_PICK = "pick";
+    private static final String PATH_PICK = "pick";
     public static final String PATH_PICKS = "picks";
     public static final String PATH_LOGIN = "data";
 

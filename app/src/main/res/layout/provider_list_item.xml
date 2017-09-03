@@ -15,7 +15,6 @@
         android:id="@+id/p_s_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dr Mahmoud Ismail"
         android:textColor="#040404"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -29,7 +28,6 @@
         android:layout_below="@id/p_s_name"
         android:layout_marginBottom="4dp"
         android:layout_marginTop="2dp"
-        android:text="Help Me "
         android:textColor="#343434"
         android:textSize="12sp" />
 
@@ -42,7 +40,6 @@
         android:layout_alignTop="@id/p_s_name"
         android:layout_marginEnd="5dp"
         android:gravity="end"
-        android:text="5:45"
         android:textColor="#10bcc9"
         android:textSize="16sp"
         android:textStyle="bold" />
@@ -54,7 +51,6 @@
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/p_phone"
         android:layout_below="@+id/p_s_name"
-        android:layout_weight="1"
         android:visibility="invisible" />
 
     <ImageView
@@ -66,7 +62,7 @@
 
         android:src="@mipmap/ic_text"
         android:visibility="invisible"
-         />
+        android:contentDescription="@string/show_details" />
 
     <TextView
         android:id="@+id/p_location"
@@ -76,7 +72,6 @@
         android:layout_marginEnd="5dp"
         android:layout_toStartOf="@+id/priorityTextView"
         android:gravity="end"
-        android:text="Fci, Zag, Egypt"
         android:textSize="12sp"
         android:textStyle="bold" />
 

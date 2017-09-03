@@ -26,14 +26,10 @@ import com.graduation.a3ltreq.ontheroad.helper.TimelineContract;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
-    private Toolbar toolbar;
     private TabLayout tabLayout;
-    private ViewPager viewPager;
     private SessionManager session;
 
-    private AdView mAdView;
-    private FirebaseAnalytics mFirebaseAnalytics;
-    private int [] icons={
+    private final int [] icons={
             R.drawable.question_64,
             R.drawable.towing_64,
             R.drawable.repair_tools_64
@@ -45,23 +41,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mAdView =(AdView)findViewById(R.id.ads_banner);
+        AdView mAdView = (AdView) findViewById(R.id.ads_banner);
         // Initialize the Mobile Ads SDK.
 
         AdRequest adRequest = new AdRequest.Builder()
                 .build();
 
         mAdView.loadAd(adRequest);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         session = new SessionManager(this);
 
         if (!session.isLoggedIn()) {
@@ -126,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void deleteUsers() {
+    private void deleteUsers() {
         // Delete All Rows
         AsyncTask<Void, Void, Void> delet = new AsyncTask<Void, Void, Void>() {
 

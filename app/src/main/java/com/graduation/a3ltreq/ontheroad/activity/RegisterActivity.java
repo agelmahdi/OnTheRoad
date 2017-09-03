@@ -29,13 +29,10 @@ import java.util.Map;
 
 public class RegisterActivity extends Activity {
     private static final String TAG = RegisterActivity.class.getSimpleName();
-    private Button btnRegister;
-    private Button btnLinkToLogin;
     private EditText inputFullName;
     private EditText inputEmail;
     private EditText inputPassword;
     private ProgressDialog pDialog;
-    private SessionManager session;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,15 +42,15 @@ public class RegisterActivity extends Activity {
         inputFullName =  findViewById(R.id.name);
         inputEmail =  findViewById(R.id.email);
         inputPassword =  findViewById(R.id.password);
-        btnRegister =  findViewById(R.id.btnRegister);
-        btnLinkToLogin =  findViewById(R.id.btnLinkToLoginScreen);
+        Button btnRegister = findViewById(R.id.btnRegister);
+        Button btnLinkToLogin = findViewById(R.id.btnLinkToLoginScreen);
 
         // Progress dialog
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
 
         // Session manager
-        session = new SessionManager(this);
+        SessionManager session = new SessionManager(this);
 
 
         // Check if user is already logged in or not
@@ -76,7 +73,7 @@ public class RegisterActivity extends Activity {
 
                 } else {
                     Toast.makeText(getApplicationContext(),
-                            "Please enter your details!", Toast.LENGTH_LONG)
+                            R.string.enter_details, Toast.LENGTH_LONG)
                             .show();
                 }
             }
@@ -112,14 +109,14 @@ public class RegisterActivity extends Activity {
 
             @Override
             public void onResponse(String response) {
-                Log.d(TAG, "Register Response: " + response.toString());
+                Log.d(TAG, R.string.response + response);
                 hideDialog();
 
                 try {
                     JSONObject jObj = new JSONObject(response);
                     int error = jObj.getInt("status");
                     if (error == 200) {
-                        Toast.makeText(RegisterActivity.this, "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(RegisterActivity.this, R.string.success_register, Toast.LENGTH_LONG).show();
 
                         // Launch login activity
                         Intent intent = new Intent(
@@ -145,7 +142,7 @@ public class RegisterActivity extends Activity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Registration Error: " + error.getMessage());
+                Log.e(TAG,R.string.error + error.getMessage());
                 Toast.makeText(RegisterActivity.this,
                         error.getMessage(), Toast.LENGTH_LONG).show();
                 hideDialog();
@@ -155,7 +152,7 @@ public class RegisterActivity extends Activity {
             @Override
             protected Map<String, String> getParams() {
                 // Posting params to register url
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("name", name);
                 params.put("email", email);
                 params.put("password", password);

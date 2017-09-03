@@ -33,8 +33,6 @@ import java.util.Map;
 
 public class LoginActivity extends Activity {
     private static final String TAG = RegisterActivity.class.getSimpleName();
-    private Button btnLogin;
-    private Button btnLinkToRegister;
     private EditText inputEmail;
     private EditText inputPassword;
     private ProgressDialog pDialog;
@@ -48,8 +46,8 @@ public class LoginActivity extends Activity {
 
         inputEmail =  findViewById(R.id.email);
         inputPassword = findViewById(R.id.password);
-        btnLogin =  findViewById(R.id.btnLogin);
-        btnLinkToRegister =  findViewById(R.id.btnLinkToRegisterScreen);
+        Button btnLogin = findViewById(R.id.btnLogin);
+        Button btnLinkToRegister = findViewById(R.id.btnLinkToRegisterScreen);
 
         // Progress dialog
         pDialog = new ProgressDialog(this);
@@ -83,7 +81,7 @@ public class LoginActivity extends Activity {
                 } else {
                     // Prompt user to enter credentials
                     Toast.makeText(getApplicationContext(),
-                            "Please enter the credentials!", Toast.LENGTH_LONG)
+                            R.string.enter_details, Toast.LENGTH_LONG)
                             .show();
                 }
             }
@@ -106,7 +104,6 @@ public class LoginActivity extends Activity {
      */
     private void checkLogin(final String email, final String password, final String token) {
         // Tag used to cancel the request
-        String tag_string_req = "req_login";
 
         RequestQueue queue = Volley.newRequestQueue(this);
         pDialog.setMessage("Logging in ...");
@@ -117,7 +114,7 @@ public class LoginActivity extends Activity {
 
             @Override
             public void onResponse(String response) {
-                Log.d(TAG, "Login Response: " + response.toString());
+                Log.d(TAG, R.string.response + response);
                 hideDialog();
 
                 try {
@@ -151,7 +148,7 @@ public class LoginActivity extends Activity {
                 } catch (JSONException e) {
                     // JSON error
                     e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.error + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -159,7 +156,7 @@ public class LoginActivity extends Activity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Login Error: " + error.getMessage());
+                Log.e(TAG,  R.string.error + error.getMessage());
                 Toast.makeText(getApplicationContext(),
                         error.getMessage(), Toast.LENGTH_LONG).show();
                 hideDialog();
@@ -169,7 +166,7 @@ public class LoginActivity extends Activity {
             @Override
             protected Map<String, String> getParams() {
                 // Posting parameters to login url
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("email", email);
                 params.put("password", password);
                 params.put("token", token);
@@ -193,7 +190,7 @@ public class LoginActivity extends Activity {
             pDialog.dismiss();
     }
 
-    public void addUser(final int id, final String name, final String email) {
+    private void addUser(final int id, final String name, final String email) {
 
         AsyncTask<Void, Void, Void> insertUser = new AsyncTask<Void, Void, Void>() {
 

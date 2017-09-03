@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <TextView
-        android:text="User"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -14,16 +14,15 @@
         android:textStyle="normal|bold" />
 
     <TextView
-        android:text="Time"
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/message_user"
         android:layout_alignParentEnd="true"
-        android:id="@+id/message_time" />
+        android:id="@+id/message_time"
+        tools:ignore="RelativeOverlap" />
 
     <TextView
-        android:text="Message"
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

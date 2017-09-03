@@ -17,7 +17,7 @@ import com.graduation.a3ltreq.ontheroad.helper.TimelineContract;
 
  class PicksWidgetAdapter implements RemoteViewsService.RemoteViewsFactory {
 
-    private Context mContext;
+    private final Context mContext;
     private Cursor mCursor;
 
     PicksWidgetAdapter(Context applicationContext) {

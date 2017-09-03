@@ -25,7 +25,7 @@ public class Utility {
     private static final int COL_NAME = 2;
     private static final int COL_EMAIL= 3;
     public static HashMap<String, String> getUserDetails(Context context) {
-        HashMap<String, String> user = new HashMap<String, String>();
+        HashMap<String, String> user = new HashMap<>();
         Cursor cursor = context.getContentResolver().query(
                 TimelineContract.PickEntry.CONTENT_URI_LOGIN,
                 USER_COLUMNS,
@@ -33,6 +33,7 @@ public class Utility {
                 null,
                 null);
 
+        assert cursor != null;
         cursor.moveToFirst();
         if (cursor.getCount() > 0) {
             user.put(TimelineContract.PickEntry.COLUMN_KEY_ID, cursor.getString(COL_ID));

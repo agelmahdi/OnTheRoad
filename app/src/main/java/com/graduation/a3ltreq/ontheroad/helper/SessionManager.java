@@ -11,16 +11,16 @@ import android.util.Log;
 
 public class SessionManager {
     // LogCat tag
-    private static String TAG = SessionManager.class.getSimpleName();
+    private static final String TAG = SessionManager.class.getSimpleName();
 
     // Shared Preferences
-    SharedPreferences pref;
+    private final SharedPreferences pref;
 
-    Editor editor;
-    Context _context;
+    private final Editor editor;
+    private final Context _context;
 
     // Shared pref mode
-    int PRIVATE_MODE = 0;
+    private final int PRIVATE_MODE = 0;
 
     // Shared preferences file name
     private static final String PREF_NAME = "OnTheRoad";

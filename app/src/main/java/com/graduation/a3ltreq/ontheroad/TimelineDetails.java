@@ -40,14 +40,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TimelineDetails extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
-    private RecyclerView recyclerView;
     private ChatAdapter mAdapter;
-    private ArrayList<ChatMessage> mChatMessages;
     private ChatMessage chatMessage;
-    private Toolbar mToolbar;
     private TextView netError;
 
-    static final String[] MESSAGES_PROJECTION = {
+    private static final String[] MESSAGES_PROJECTION = {
             TimelineContract.PickEntry.COLUMN_USERS_NAME,
             TimelineContract.PickEntry.COLUMN_MESSAGES,
             TimelineContract.PickEntry.COLUMN_CREATED_AT,
@@ -59,7 +56,7 @@ public class TimelineDetails extends AppCompatActivity implements LoaderManager.
     static final int COL_NUM_MESSAGES = 1;
     static final int COL_NUM_CREATED_AT = 2;
     static final int COL_NUM_LOCATION = 3;
-    static final int COL_NUM_PICK_ID = 4;
+    private static final int COL_NUM_PICK_ID = 4;
 
 
     private static final int ID_DETAIL_LOADER = 353;
@@ -80,7 +77,7 @@ public class TimelineDetails extends AppCompatActivity implements LoaderManager.
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar_details);
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_details);
 
         this.setSupportActionBar(mToolbar);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -93,9 +90,9 @@ public class TimelineDetails extends AppCompatActivity implements LoaderManager.
         txtlocation = (TextView) findViewById(R.id.location_msg);
 
         textInputLayout = (EditText) findViewById(R.id.c_input);
-        recyclerView = (RecyclerView) findViewById(R.id.c_recycler_view);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.c_recycler_view);
 
-        mChatMessages = new ArrayList<>();
+        ArrayList<ChatMessage> mChatMessages = new ArrayList<>();
 
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -127,7 +124,7 @@ public class TimelineDetails extends AppCompatActivity implements LoaderManager.
 
                 } else {
                     Toast.makeText(TimelineDetails.this,
-                            "Please enter your details!", Toast.LENGTH_LONG)
+                            R.string.enter_details, Toast.LENGTH_LONG)
                             .show();
                 }
 
@@ -158,7 +155,7 @@ public class TimelineDetails extends AppCompatActivity implements LoaderManager.
 
             @Override
             public void onResponse(String response) {
-                Log.d(TAG, "Register Response: " + response.toString());
+                Log.d(TAG, R.string.response + response);
                 hideDialog();
 
                 try {
@@ -166,7 +163,7 @@ public class TimelineDetails extends AppCompatActivity implements LoaderManager.
                     int error = jObj.getInt("status");
                     if (error == 200) {
 
-                        Toast.makeText(TimelineDetails.this, "Message Sent !", Toast.LENGTH_LONG).show();
+                        Toast.makeText(TimelineDetails.this, R.string.message_sent, Toast.LENGTH_LONG).show();
 
                     } else {
 
@@ -185,7 +182,7 @@ public class TimelineDetails extends AppCompatActivity implements LoaderManager.
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Post Error: " + error.getMessage());
+                Log.e(TAG, R.string.error + error.getMessage());
                 Toast.makeText(TimelineDetails.this,
                         error.getMessage(), Toast.LENGTH_LONG).show();
                 hideDialog();
@@ -194,7 +191,7 @@ public class TimelineDetails extends AppCompatActivity implements LoaderManager.
 
             @Override
             protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("pick_id", pick_id);
                 params.put("u_id", u_id);
                 params.put("msg", msg);
@@ -206,8 +203,6 @@ public class TimelineDetails extends AppCompatActivity implements LoaderManager.
         };
 
         queue.add(strReq);
-
-
     }
 
     private void TimelinePick(final String id) {
@@ -221,7 +216,7 @@ public class TimelineDetails extends AppCompatActivity implements LoaderManager.
                 AppConfig.URL_TIMELINE_PICK, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d(TAG, "Register Response: " + response.toString());
+                Log.d(TAG, R.string.response + response);
                 hideDialog();
                 ArrayList<ChatMessage> cMes = new ArrayList<>();
                 netError.setVisibility(View.INVISIBLE);
@@ -248,10 +243,8 @@ public class TimelineDetails extends AppCompatActivity implements LoaderManager.
                             chatMessage = new ChatMessage(jsonObject);
                             cMes.add(chatMessage);
                         }
-                        if (cMes != null) {
-                            if (mAdapter != null) {
-                                mAdapter.add(cMes);
-                            }
+                        if (mAdapter != null) {
+                            mAdapter.add(cMes);
                         }
                     } else {
 
@@ -267,7 +260,7 @@ public class TimelineDetails extends AppCompatActivity implements LoaderManager.
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Post Error: " + error.getMessage());
+                Log.e(TAG, R.string.error + error.getMessage());
                 netError.setVisibility(View.VISIBLE);
 
                 hideDialog();
@@ -277,7 +270,7 @@ public class TimelineDetails extends AppCompatActivity implements LoaderManager.
             @Override
             protected Map<String, String> getParams() {
                 // Posting params to register url
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("id", id);
 
 

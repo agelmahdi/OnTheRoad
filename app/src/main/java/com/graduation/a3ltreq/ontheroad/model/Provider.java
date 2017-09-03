@@ -14,7 +14,7 @@ import org.json.JSONObject;
 public  class Provider implements Parcelable {
     private int p_id;
 
-    protected Provider(Parcel in) {
+    private Provider(Parcel in) {
         p_id = in.readInt();
         mName = in.readString();
         phone = in.readString();

@@ -1,6 +1,5 @@
 package com.graduation.a3ltreq.ontheroad.Fragment;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -36,14 +34,11 @@ import java.util.ArrayList;
 
 public class RescueFragment extends Fragment {
     private static final String PROVIDERS = "providers";
-    private RecyclerView recyclerView;
     private ProviderAdapter mAdapter;
-    private ArrayList<Provider> mProviders;
     private Provider provider;
     private Context context;
     private TextView netError;
     private static final String TAG = RescueFragment.class.getSimpleName();
-    ;
 
 
     public RescueFragment() {
@@ -62,9 +57,9 @@ public class RescueFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_provider, container, false);
 
 
-        recyclerView = rootView.findViewById(R.id.p_recycler_view);
+        RecyclerView recyclerView = rootView.findViewById(R.id.p_recycler_view);
         netError = rootView.findViewById(R.id.net_work_error);
-        mProviders = new ArrayList<>();
+        ArrayList<Provider> mProviders = new ArrayList<>();
 
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
@@ -109,7 +104,7 @@ public class RescueFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onResponse(String response) {
-                Log.d(TAG, "Register Response: " + response.toString());
+                Log.d(TAG, R.string.response + response);
                 netError.setVisibility(View.INVISIBLE);
                 ArrayList<Provider> mPs = new ArrayList<>();
                 try {

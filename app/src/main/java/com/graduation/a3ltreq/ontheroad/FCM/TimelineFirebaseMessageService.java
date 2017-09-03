@@ -55,7 +55,7 @@ public class TimelineFirebaseMessageService extends FirebaseMessagingService {
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.cast_ic_notification_0)
+                .setSmallIcon(R.drawable.towing_64)
                 .setContentTitle("On The Road : " + user)
                 .setContentText(mes)
                 .setAutoCancel(true)

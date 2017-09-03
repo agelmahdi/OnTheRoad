@@ -16,10 +16,6 @@ import java.util.HashMap;
 
 
 public class ProfileFragment extends Fragment {
-    private TextView txtName;
-    private TextView txtEmail;
-    private Context mContext;
-
 
 
     public ProfileFragment() {
@@ -36,12 +32,12 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mContext=getContext();
+        Context mContext = getContext();
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
 
         // Inflate the layout for this fragment
-        txtName =  rootView.findViewById(R.id.name);
-        txtEmail =  rootView.findViewById(R.id.email);
+        TextView txtName = rootView.findViewById(R.id.name);
+        TextView txtEmail = rootView.findViewById(R.id.email);
 
 
 

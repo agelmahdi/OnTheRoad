@@ -147,7 +147,6 @@ public class TimelineDetails extends AppCompatActivity implements LoaderManager.
 
         RequestQueue queue = Volley.newRequestQueue(TimelineDetails.this);
 
-        pDialog.setMessage("Loading ...");
         showDialog();
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
@@ -209,7 +208,6 @@ public class TimelineDetails extends AppCompatActivity implements LoaderManager.
 
         RequestQueue queue = Volley.newRequestQueue(TimelineDetails.this);
 
-        pDialog.setMessage("Loading ...");
         showDialog();
 
         StringRequest strReq = new StringRequest(Request.Method.POST,

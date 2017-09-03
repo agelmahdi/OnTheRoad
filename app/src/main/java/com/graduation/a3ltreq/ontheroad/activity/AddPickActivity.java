@@ -62,7 +62,7 @@ public class AddPickActivity extends AppCompatActivity {
                     TimelineAddPick(id, input);
                 } else {
                     Toast.makeText(getApplicationContext(),
-                            "Please enter your details!", Toast.LENGTH_LONG)
+                            R.string.enter_details, Toast.LENGTH_LONG)
                             .show();
                 }
             }
@@ -74,7 +74,6 @@ public class AddPickActivity extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        pDialog.setMessage("Posting ...");
         showDialog();
 
         StringRequest strReq = new StringRequest(Request.Method.POST,

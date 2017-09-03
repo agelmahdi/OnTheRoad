@@ -101,7 +101,6 @@ public class RegisterActivity extends Activity {
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        pDialog.setMessage("Registering ...");
         showDialog();
 
         StringRequest strReq = new StringRequest(Request.Method.POST,

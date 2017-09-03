@@ -106,7 +106,6 @@ public class LoginActivity extends Activity {
         // Tag used to cancel the request
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        pDialog.setMessage("Logging in ...");
         showDialog();
 
         StringRequest strReq = new StringRequest(Request.Method.POST,

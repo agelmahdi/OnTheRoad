@@ -32,6 +32,16 @@
     <string name="success_register">User successfully registered. Try login now!</string>
     <string name="message_sent">Message Sent !</string>
     <string name="send">Send Message</string>
+    <string name="user_name">User Name</string>
+    <string name="email">Email</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="direction">Direction</string>
+    <string name="car_owner_image">Car owner Image</string>
+    <string name="location_icon">Location</string>
+    <string name="request_help">Request Help</string>
+    <string name="post_help_another_car_owners_may_help_you">another car owners may help you!</string>
+    <string name="content_authority">com.graduation.a3ltreq.ontheroad</string>
+    <string name="sync_account_type">ontheroad.a3ltreq.graduation.com</string>
 
 
 </resources>

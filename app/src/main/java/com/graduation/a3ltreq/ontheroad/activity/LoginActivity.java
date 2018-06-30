@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,16 +34,25 @@ import java.util.Map;
 
 public class LoginActivity extends Activity {
     private static final String TAG = RegisterActivity.class.getSimpleName();
+    public static final String PREFERENCE_KEY ="pref" ;
     private EditText inputEmail;
     private EditText inputPassword;
     private ProgressDialog pDialog;
     private SessionManager session;
+    private static SharedPreferences preferences;
+    public static final String PREF_USER_ID = "user_id";
+    public static final String PREF_USER_NAME= "user_name";
+    public static final String PREF_USER_MAIL= "user_email";
+
+
+
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.login_layout);
+        preferences = getApplicationContext().getSharedPreferences(PREFERENCE_KEY, 0);
 
         inputEmail =  findViewById(R.id.email);
         inputPassword = findViewById(R.id.password);
@@ -111,6 +121,7 @@ public class LoginActivity extends Activity {
         StringRequest strReq = new StringRequest(Request.Method.POST,
                 AppConfig.URL_LOGIN, new Response.Listener<String>() {
 
+
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, R.string.response + response);
@@ -129,9 +140,13 @@ public class LoginActivity extends Activity {
                         String email = user.getString("email");
 
                         session.setLogin(true);
+                        SharedPreferences.Editor editor = preferences.edit();
 
-                        // Inserting row in users table
-                        addUser(id, name, email);
+                        editor.putInt(PREF_USER_ID, id);
+                        editor.putString(PREF_USER_NAME,name);
+                        editor.putString(PREF_USER_MAIL,email);
+                        editor.apply();
+
 
                         // Launch main activity
                         Intent intent = new Intent(LoginActivity.this,
@@ -189,23 +204,5 @@ public class LoginActivity extends Activity {
             pDialog.dismiss();
     }
 
-    private void addUser(final int id, final String name, final String email) {
 
-        AsyncTask<Void, Void, Void> insertUser = new AsyncTask<Void, Void, Void>() {
-
-            @Override
-            protected Void doInBackground(Void... params) {
-                ContentValues values = new ContentValues();
-                values.put(TimelineContract.PickEntry.COLUMN_KEY_ID, id);
-                values.put(TimelineContract.PickEntry.COLUMN_USER_NAME, name); // Name
-                values.put(TimelineContract.PickEntry.COLUMN_KEY_EMAIL, email); // Email
-
-                // Insert the content values via a ContentResolver
-                getContentResolver().insert(TimelineContract.PickEntry.CONTENT_URI_LOGIN, values);
-                return null;
-
-            }
-        };
-        insertUser.execute();
-    }
 }

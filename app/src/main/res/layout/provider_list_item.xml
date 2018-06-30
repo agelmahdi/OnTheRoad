@@ -20,7 +20,6 @@
         android:textStyle="bold"
         android:typeface="sans" />
 
-    <!-- Artist Name -->
     <TextView
         android:id="@+id/p_name"
         android:layout_width="220dp"
@@ -31,7 +30,6 @@
         android:textColor="#343434"
         android:textSize="12sp" />
 
-    <!-- Rightend Duration -->
     <TextView
         android:id="@+id/p_phone"
         android:layout_width="wrap_content"
@@ -66,8 +64,8 @@
 
     <TextView
         android:id="@+id/p_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="96dp"
+        android:layout_height="16dp"
         android:layout_alignBottom="@+id/p_name"
         android:layout_marginEnd="5dp"
         android:layout_toStartOf="@+id/priorityTextView"

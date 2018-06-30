@@ -1,6 +1,11 @@
 package com.graduation.a3ltreq.ontheroad;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,7 +32,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.graduation.a3ltreq.ontheroad.Adapter.ChatAdapter;
 import com.graduation.a3ltreq.ontheroad.app.AppConfig;
-import com.graduation.a3ltreq.ontheroad.app.Utility;
 import com.graduation.a3ltreq.ontheroad.helper.TimelineContract;
 import com.graduation.a3ltreq.ontheroad.model.ChatMessage;
 
@@ -39,11 +43,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.R.attr.key;
+import static com.graduation.a3ltreq.ontheroad.activity.LoginActivity.PREFERENCE_KEY;
+import static com.graduation.a3ltreq.ontheroad.activity.LoginActivity.PREF_USER_ID;
+import static com.graduation.a3ltreq.ontheroad.activity.LoginActivity.PREF_USER_NAME;
+
 public class TimelineDetails extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     private ChatAdapter mAdapter;
     private ChatMessage chatMessage;
-    private TextView netError;
 
+    SharedPreferences preferences;
     private static final String[] MESSAGES_PROJECTION = {
             TimelineContract.PickEntry.COLUMN_USERS_NAME,
             TimelineContract.PickEntry.COLUMN_MESSAGES,
@@ -62,48 +71,44 @@ public class TimelineDetails extends AppCompatActivity implements LoaderManager.
     private static final int ID_DETAIL_LOADER = 353;
 
     private static final String TAG = TimelineDetails.class.getSimpleName();
-    private ProgressDialog pDialog;
     private Uri mUri;
     private int pick_id;
 
     private EditText textInputLayout;
 
+   private RecyclerView recyclerView;
+    private boolean ascending = true;
+
+    private Intent intent;
     private TextView txtname, txtdescription, txtduration, txtlocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline_details);
-        pDialog = new ProgressDialog(this);
-        pDialog.setCancelable(false);
+        preferences = getSharedPreferences(PREFERENCE_KEY, 0);
+        /*pDialog = new ProgressDialog(this);
+        pDialog.setCancelable(false);*/
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_details);
 
-        this.setSupportActionBar(mToolbar);
-        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setSupportActionBar(mToolbar);
 
-        netError =(TextView) findViewById(R.id.net_work_error_msg);
-
-        txtname = (TextView) findViewById(R.id.name_msg);
-        txtdescription = (TextView) findViewById(R.id.description_msg);
-        txtduration = (TextView) findViewById(R.id.duration_msg);
-        txtlocation = (TextView) findViewById(R.id.location_msg);
 
         textInputLayout = (EditText) findViewById(R.id.c_input);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.c_recycler_view);
-
-        ArrayList<ChatMessage> mChatMessages = new ArrayList<>();
+        recyclerView = (RecyclerView) findViewById(R.id.c_recycler_view);
 
         LinearLayoutManager layoutManager
-                = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+                = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
+        //layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        mAdapter = new ChatAdapter(mChatMessages, this);
-        recyclerView.setAdapter(mAdapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        recyclerView.smoothScrollToPosition(0);
 
         mUri = getIntent().getData();
         if (mUri == null) throw new NullPointerException("URI for DetailActivity cannot be null");
+
 
 
         FloatingActionButton fabButton = (FloatingActionButton) findViewById(R.id.fab_msg);
@@ -112,12 +117,11 @@ public class TimelineDetails extends AppCompatActivity implements LoaderManager.
             @Override
             public void onClick(View view) {
 
-                HashMap<String, String> user = Utility.getUserDetails(TimelineDetails.this);
-                final String id = user.get(TimelineContract.PickEntry.COLUMN_KEY_ID);
+                final int id = preferences.getInt(PREF_USER_ID, 0);
                 String msg = textInputLayout.getText().toString();
 
 
-                if (!msg.isEmpty() && !id.isEmpty()) {
+                if (!msg.isEmpty()) {
                     insertMsg(String.valueOf(pick_id), id, msg);
                     textInputLayout.setText("");
                     getSupportLoaderManager().restartLoader(ID_DETAIL_LOADER, null, TimelineDetails.this);
@@ -135,19 +139,32 @@ public class TimelineDetails extends AppCompatActivity implements LoaderManager.
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
+        stopService(intent);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 
-        // re-queries for all tasks
         getSupportLoaderManager().restartLoader(ID_DETAIL_LOADER, null, this);
 
     }
 
-    private void insertMsg(final String pick_id, final String u_id, final String msg) {
+    private void insertMsg(final String pick_id, final int u_id, final String msg) {
 
         RequestQueue queue = Volley.newRequestQueue(TimelineDetails.this);
 
-        showDialog();
+       // showDialog();
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
                 AppConfig.URL_DO_COMMENT, new Response.Listener<String>() {
@@ -155,7 +172,7 @@ public class TimelineDetails extends AppCompatActivity implements LoaderManager.
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, R.string.response + response);
-                hideDialog();
+               // hideDialog();
 
                 try {
                     JSONObject jObj = new JSONObject(response);
@@ -184,7 +201,7 @@ public class TimelineDetails extends AppCompatActivity implements LoaderManager.
                 Log.e(TAG, R.string.error + error.getMessage());
                 Toast.makeText(TimelineDetails.this,
                         error.getMessage(), Toast.LENGTH_LONG).show();
-                hideDialog();
+             //   hideDialog();
             }
         }) {
 
@@ -192,7 +209,7 @@ public class TimelineDetails extends AppCompatActivity implements LoaderManager.
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("pick_id", pick_id);
-                params.put("u_id", u_id);
+                params.put("u_id", u_id + "");
                 params.put("msg", msg);
 
 
@@ -204,83 +221,8 @@ public class TimelineDetails extends AppCompatActivity implements LoaderManager.
         queue.add(strReq);
     }
 
-    private void TimelinePick(final String id) {
 
-        RequestQueue queue = Volley.newRequestQueue(TimelineDetails.this);
-
-        showDialog();
-
-        StringRequest strReq = new StringRequest(Request.Method.POST,
-                AppConfig.URL_TIMELINE_PICK, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d(TAG, R.string.response + response);
-                hideDialog();
-                ArrayList<ChatMessage> cMes = new ArrayList<>();
-                netError.setVisibility(View.INVISIBLE);
-
-                try {
-                    JSONObject jObj = new JSONObject(response);
-                    int error = jObj.getInt("status");
-                    if (error == 200) {
-                        JSONObject user = jObj.getJSONObject("data");
-                        // int id = user.getInt("id");
-                        String name = user.getString("name");
-                        String message = user.getString("problem");
-                        String location = user.getString("location");
-                        String createdAt = user.getString("created_at");
-
-                        txtname.setText(name);
-                        txtdescription.setText(message);
-                        txtlocation.setText(location);
-                        txtduration.setText(String.valueOf(createdAt));
-
-                        JSONArray array = jObj.getJSONArray("comments");
-                        for (int i = 0; i < array.length(); i++) {
-                            JSONObject jsonObject = array.getJSONObject(i);
-                            chatMessage = new ChatMessage(jsonObject);
-                            cMes.add(chatMessage);
-                        }
-                        if (mAdapter != null) {
-                            mAdapter.add(cMes);
-                        }
-                    } else {
-
-                        netError.setVisibility(View.VISIBLE);
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, R.string.error + error.getMessage());
-                netError.setVisibility(View.VISIBLE);
-
-                hideDialog();
-            }
-        }) {
-
-            @Override
-            protected Map<String, String> getParams() {
-                // Posting params to register url
-                Map<String, String> params = new HashMap<>();
-                params.put("id", id);
-
-
-                return params;
-            }
-
-        };
-        queue.add(strReq);
-
-    }
-
-    private void showDialog() {
+   /* private void showDialog() {
         if (!pDialog.isShowing())
             pDialog.show();
     }
@@ -288,7 +230,7 @@ public class TimelineDetails extends AppCompatActivity implements LoaderManager.
     private void hideDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();
-    }
+    }*/
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -321,14 +263,41 @@ public class TimelineDetails extends AppCompatActivity implements LoaderManager.
             return;
         }
         pick_id = data.getInt(COL_NUM_PICK_ID);
-        TimelinePick(String.valueOf(pick_id));
-
-
+        //TimelinePick(String.valueOf(pick_id));
+        intent = new Intent(this, ChatService.class);
+        intent.putExtra("PICK_ID",pick_id);
+        this.startService(intent);
+        registerReceiver(broadcastReceiver, new IntentFilter(ChatService.BROADCAST_ACTION));
+        String name = data.getString(COL_NUM_USERS_NAME);
+        getSupportActionBar().setTitle(name);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
 
+    }
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            updateUI(intent);
+        }
+    };
+
+    private void updateUI(Intent intent) {
+
+        ArrayList<ChatMessage> chatMessages = intent.getParcelableArrayListExtra("CHAT_MESSAGES");
+        for (int i = 0;i<chatMessages.size();i++){
+            ChatMessage chatMessage = chatMessages.get(i);
+              int id =  chatMessage.getId();
+            if (chatMessage.getMessageUser().equals(preferences.getString(PREF_USER_NAME,""))) {
+                recyclerView.smoothScrollToPosition(id);
+            }
+
+        }
+        mAdapter = new ChatAdapter(chatMessages, this);
+
+        recyclerView.setAdapter(mAdapter);
     }
 
 

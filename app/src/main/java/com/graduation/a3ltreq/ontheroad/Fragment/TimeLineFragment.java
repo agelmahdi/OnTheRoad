@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -21,7 +20,6 @@ import com.graduation.a3ltreq.ontheroad.Adapter.TimeLineAdapter;
 import com.graduation.a3ltreq.ontheroad.MainActivity;
 import com.graduation.a3ltreq.ontheroad.R;
 import com.graduation.a3ltreq.ontheroad.TimelineDetails;
-import com.graduation.a3ltreq.ontheroad.activity.AddPickActivity;
 import com.graduation.a3ltreq.ontheroad.helper.TimelineContract;
 
 
@@ -90,19 +88,6 @@ public class TimeLineFragment extends Fragment implements
         mAdapter = new TimeLineAdapter(mContext, this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mAdapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
-
-        FloatingActionButton fabButton =  rootView.findViewById(R.id.fab);
-
-        fabButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Create a new intent to start an AddTaskActivity
-                Intent addTaskIntent = new Intent(mContext, AddPickActivity.class);
-                startActivity(addTaskIntent);
-            }
-        });
-
         mLoaderManager.initLoader(TASK_LOADER_ID, null, this);
 
         return rootView;

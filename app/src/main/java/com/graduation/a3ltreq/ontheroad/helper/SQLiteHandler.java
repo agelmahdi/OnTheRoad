@@ -17,7 +17,7 @@ class SQLiteHandler extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 14;
+    private static final int DATABASE_VERSION = 5;
 
     // Database Name
     private static final String DATABASE_NAME = "on_the_road";
@@ -29,11 +29,6 @@ class SQLiteHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_LOGIN_TABLE = "CREATE TABLE " + TABLE_LOGIN + "(" +
-                TimelineContract.PickEntry._ID + " INTEGER PRIMARY KEY, " +
-                TimelineContract.PickEntry.COLUMN_KEY_ID + " INTEGER NOT NULL," +
-                TimelineContract.PickEntry.COLUMN_USER_NAME + " TEXT NOT NULL," +
-                TimelineContract.PickEntry.COLUMN_KEY_EMAIL + " TEXT UNIQUE NOT NULL);";
 
         String CREATE_TABLE = "CREATE TABLE " + TimelineContract.PickEntry.TABLE_NAME + " (" +
                 TimelineContract.PickEntry._ID + " INTEGER PRIMARY KEY, " +
@@ -41,10 +36,11 @@ class SQLiteHandler extends SQLiteOpenHelper {
                 TimelineContract.PickEntry.COLUMN_MESSAGES + " TEXT NOT NULL, " +
                 TimelineContract.PickEntry.COLUMN_CREATED_AT + " NUMERIC, " +
                 TimelineContract.PickEntry.COLUMN_LOCATION + " TEXT," +
-                TimelineContract.PickEntry.COLUMN_PICK_ID + " INTEGER NOT NULL);";
+                TimelineContract.PickEntry.COLUMN_PICK_ID + " INTEGER NOT NULL," +
+
+                " UNIQUE (" + TimelineContract.PickEntry.COLUMN_PICK_ID + ") ON CONFLICT REPLACE);";
 
 
-        db.execSQL(CREATE_LOGIN_TABLE);
         db.execSQL(CREATE_TABLE);
 
 
@@ -54,7 +50,6 @@ class SQLiteHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOGIN);
         db.execSQL("DROP TABLE IF EXISTS " + TimelineContract.PickEntry.TABLE_NAME);
 
         // Create tables again

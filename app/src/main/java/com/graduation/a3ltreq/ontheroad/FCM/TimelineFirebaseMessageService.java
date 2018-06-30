@@ -10,6 +10,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v4.app.NotificationCompat;
+import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -17,6 +18,8 @@ import com.graduation.a3ltreq.ontheroad.MainActivity;
 import com.graduation.a3ltreq.ontheroad.R;
 import com.graduation.a3ltreq.ontheroad.Widget.TimelineWidgetProvider;
 import com.graduation.a3ltreq.ontheroad.helper.TimelineContract;
+
+import java.util.Objects;
 
 /**
  * Created by Ahmed El-Mahdi on 6/25/2017.
@@ -34,13 +37,17 @@ public class TimelineFirebaseMessageService extends FirebaseMessagingService {
         String createdAt = remoteMessage.getData().get("created_at");
         int pick_id = Integer.parseInt(remoteMessage.getData().get("pick_id"));
 
-        showNotification(mes, user);
+            showNotification(mes, user);
 
-        insertPick(user, mes, createdAt, location, pick_id);
+            insertPick(user, mes, createdAt, location, pick_id);
 
-        Intent intentUpdate = new Intent(this, TimelineWidgetProvider.class);
-        intentUpdate.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        sendBroadcast(intentUpdate);
+            Intent intentUpdate = new Intent(this, TimelineWidgetProvider.class);
+            intentUpdate.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+            sendBroadcast(intentUpdate);
+
+
+
+
 
     }
 
@@ -55,7 +62,7 @@ public class TimelineFirebaseMessageService extends FirebaseMessagingService {
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.towing_64)
+                .setSmallIcon(R.drawable.man32)
                 .setContentTitle("On The Road : " + user)
                 .setContentText(mes)
                 .setAutoCancel(true)

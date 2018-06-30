@@ -1,6 +1,7 @@
 package com.graduation.a3ltreq.ontheroad.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -21,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.graduation.a3ltreq.ontheroad.Adapter.ProviderAdapter;
+import com.graduation.a3ltreq.ontheroad.MapsActivity;
 import com.graduation.a3ltreq.ontheroad.R;
 import com.graduation.a3ltreq.ontheroad.app.AppConfig;
 import com.graduation.a3ltreq.ontheroad.model.Provider;
@@ -32,12 +34,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-public class RescueFragment extends Fragment {
+public class RescueFragment extends Fragment implements ProviderAdapter.ProviderOnClickHandler {
     private static final String PROVIDERS = "providers";
+    public static final String PROVIDER_DETAILS = "detail_provider";
+
     private ProviderAdapter mAdapter;
     private Provider provider;
     private Context context;
-    private TextView netError;
     private static final String TAG = RescueFragment.class.getSimpleName();
 
 
@@ -58,16 +61,14 @@ public class RescueFragment extends Fragment {
 
 
         RecyclerView recyclerView = rootView.findViewById(R.id.p_recycler_view);
-        netError = rootView.findViewById(R.id.net_work_error);
         ArrayList<Provider> mProviders = new ArrayList<>();
 
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        mAdapter = new ProviderAdapter(mProviders, context);
+        mAdapter = new ProviderAdapter(mProviders, context, this);
         recyclerView.setAdapter(mAdapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(context, LinearLayoutManager.VERTICAL));
         if (savedInstanceState != null) {
             if (savedInstanceState.containsKey(PROVIDERS)) {
                 mProviders = savedInstanceState.getParcelableArrayList(PROVIDERS);
@@ -105,7 +106,6 @@ public class RescueFragment extends Fragment {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, R.string.response + response);
-                netError.setVisibility(View.INVISIBLE);
                 ArrayList<Provider> mPs = new ArrayList<>();
                 try {
                     JSONObject jObj = new JSONObject(response);
@@ -127,8 +127,6 @@ public class RescueFragment extends Fragment {
 
                     } else {
 
-                        netError.setVisibility(View.VISIBLE);
-
 
                     }
                 } catch (JSONException e) {
@@ -140,8 +138,6 @@ public class RescueFragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                netError.setVisibility(View.VISIBLE);
-
 
             }
         }) {
@@ -152,4 +148,11 @@ public class RescueFragment extends Fragment {
         queue.add(strReq);
     }
 
+    @Override
+    public void onClickProvider(Provider provider) {
+        Intent intent = new Intent(getContext(),MapsActivity.class);
+        intent.putExtra(PROVIDER_DETAILS, provider);
+        startActivity(intent);
+
+    }
 }

@@ -1,6 +1,7 @@
 package com.graduation.a3ltreq.ontheroad.Fragment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,14 +10,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.graduation.a3ltreq.ontheroad.R;
-import com.graduation.a3ltreq.ontheroad.app.Utility;
-import com.graduation.a3ltreq.ontheroad.helper.TimelineContract;
 
-import java.util.HashMap;
+import static com.graduation.a3ltreq.ontheroad.activity.LoginActivity.PREFERENCE_KEY;
+import static com.graduation.a3ltreq.ontheroad.activity.LoginActivity.PREF_USER_MAIL;
+import static com.graduation.a3ltreq.ontheroad.activity.LoginActivity.PREF_USER_NAME;
 
 
 public class ProfileFragment extends Fragment {
 
+    SharedPreferences SharedPrefs;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -32,6 +34,8 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        SharedPrefs = getContext().getSharedPreferences(PREFERENCE_KEY, 0);
+
         Context mContext = getContext();
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
 
@@ -40,11 +44,10 @@ public class ProfileFragment extends Fragment {
         TextView txtEmail = rootView.findViewById(R.id.email);
 
 
+        String name = SharedPrefs.getString(PREF_USER_NAME, "");
+        String email =SharedPrefs.getString(PREF_USER_MAIL,"");
 
 
-        HashMap<String, String> user = Utility.getUserDetails(mContext);
-        String name = user.get(TimelineContract.PickEntry.COLUMN_USER_NAME);
-        String email = user.get(TimelineContract.PickEntry.COLUMN_KEY_EMAIL);
 
         //Displaying the user details on the screen
         txtName.setText(name);

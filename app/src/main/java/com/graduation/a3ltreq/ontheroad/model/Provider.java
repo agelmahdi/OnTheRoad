@@ -14,8 +14,14 @@ import org.json.JSONObject;
 public  class Provider implements Parcelable {
     private int p_id;
 
-    private Provider(Parcel in) {
+    private double lat;
+    private double lng;
+
+
+    protected Provider(Parcel in) {
         p_id = in.readInt();
+        lat = in.readDouble();
+        lng = in.readDouble();
         mName = in.readString();
         phone = in.readString();
         location = in.readString();
@@ -34,6 +40,14 @@ public  class Provider implements Parcelable {
             return new Provider[size];
         }
     };
+
+    public double getLat() {
+        return lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
 
     public String getmName() {
         return mName;
@@ -72,6 +86,8 @@ public  class Provider implements Parcelable {
         this.location = Provider.getString("location");
         this.s_id = Provider.getInt("s_id");
         this.s_name = Provider.getString("s_name");
+        this.lat = Provider.getDouble("lat");
+        this.lng = Provider.getDouble("lng");
 
     }
 
@@ -86,19 +102,20 @@ public  class Provider implements Parcelable {
 
     }
 
-
     @Override
     public int describeContents() {
         return 0;
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(p_id);
-        dest.writeString(mName);
-        dest.writeString(phone);
-        dest.writeString(location);
-        dest.writeInt(s_id);
-        dest.writeString(s_name);
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(p_id);
+        parcel.writeDouble(lat);
+        parcel.writeDouble(lng);
+        parcel.writeString(mName);
+        parcel.writeString(phone);
+        parcel.writeString(location);
+        parcel.writeInt(s_id);
+        parcel.writeString(s_name);
     }
 }

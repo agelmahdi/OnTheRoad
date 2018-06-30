@@ -17,7 +17,6 @@ public class TimelineContract {
 
     private static final String PATH_PICK = "pick";
     public static final String PATH_PICKS = "picks";
-    public static final String PATH_LOGIN = "data";
 
 
     public static final class PickEntry implements BaseColumns {
@@ -26,16 +25,12 @@ public class TimelineContract {
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_PICK).build();
         public static final Uri CONTENT_URI_PICKS =
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_PICKS).build();
-        public static final Uri CONTENT_URI_LOGIN =
-                BASE_CONTENT_URI.buildUpon().appendPath(PATH_LOGIN).build();
+
 
         public static final String TABLE_NAME = "picks";
         public static final String TABLE_LOGIN = "data";
 
-        public static final String COLUMN_KEY_ID = "id";
-        public static final String COLUMN_USER_NAME = "name";
-        public static final String COLUMN_USER_LOCATION = "location";
-        public static final String COLUMN_KEY_EMAIL = "email";
+
 
         // PICKS Table Columns names
         // public static final String COLUMN_USERS_ID = "id";

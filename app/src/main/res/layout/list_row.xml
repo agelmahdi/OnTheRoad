@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:padding="3dp"
         android:layout_alignParentStart="true"
-        android:background="@drawable/ic_person_black"
+        android:background="@drawable/man64"
         android:layout_marginEnd="6dp">
 
         <ImageView
@@ -85,8 +85,8 @@
 
     <TextView
         android:id="@+id/location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="96dp"
+        android:layout_height="16dp"
         android:gravity="end"
         android:layout_marginEnd="6dp"
         android:textSize="12sp"

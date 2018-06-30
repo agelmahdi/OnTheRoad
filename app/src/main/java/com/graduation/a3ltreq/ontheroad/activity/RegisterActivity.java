@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -37,13 +38,14 @@ public class RegisterActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.register_layout);
 
         inputFullName =  findViewById(R.id.name);
         inputEmail =  findViewById(R.id.email);
         inputPassword =  findViewById(R.id.password);
         Button btnRegister = findViewById(R.id.btnRegister);
-        Button btnLinkToLogin = findViewById(R.id.btnLinkToLoginScreen);
+        FloatingActionButton fabButton =  findViewById(R.id.btnLinkToLoginScreen);
+
 
         // Progress dialog
         pDialog = new ProgressDialog(this);
@@ -79,9 +81,9 @@ public class RegisterActivity extends Activity {
             }
         });
 
-        // Link to Login Screen
-        btnLinkToLogin.setOnClickListener(new View.OnClickListener() {
 
+        fabButton.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
                 Intent i = new Intent(RegisterActivity.this,
                         LoginActivity.class);

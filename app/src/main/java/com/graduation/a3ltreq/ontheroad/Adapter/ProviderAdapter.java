@@ -22,16 +22,23 @@ public class ProviderAdapter extends RecyclerView.Adapter<ProviderAdapter.MyView
 
     private final Context mContext;
 
-    public ProviderAdapter(ArrayList<Provider> mPrvider, Context context) {
+    private final ProviderOnClickHandler mClickHandler;
+
+    public interface ProviderOnClickHandler {
+        void onClickProvider(Provider provider);
+    }
+    public ProviderAdapter(ArrayList<Provider> mPrvider, Context context, ProviderOnClickHandler mClickHandler) {
         this.mPrvider = mPrvider;
         this.mContext = context;
+        this.mClickHandler=mClickHandler;
+
     }
 
 
     @Override
     public ProviderAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext)
-                .inflate(R.layout.provider_list_item, parent, false);
+                .inflate(R.layout.list_item_provider, parent, false);
         return new ProviderAdapter.MyViewHolder(view);
 
     }
@@ -45,6 +52,13 @@ public class ProviderAdapter extends RecyclerView.Adapter<ProviderAdapter.MyView
         holder.description.setText(provider.getS_name());
         holder.location.setText(provider.getLocation());
         holder.duration.setText(provider.getPhone());
+
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mClickHandler.onClickProvider(provider);
+            }
+        });
 
 
     }
@@ -63,10 +77,10 @@ public class ProviderAdapter extends RecyclerView.Adapter<ProviderAdapter.MyView
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            this.name =  itemView.findViewById(R.id.p_name);
-            this.description = itemView.findViewById(R.id.p_s_name);
-            this.duration =  itemView.findViewById(R.id.p_phone);
-            this.location = itemView.findViewById(R.id.p_location);
+            this.name =  itemView.findViewById(R.id.provider_name);
+            this.description = itemView.findViewById(R.id.provider_description);
+            this.duration =  itemView.findViewById(R.id.provider_phone);
+            this.location = itemView.findViewById(R.id.provider_location);
             mView = itemView;
 
         }

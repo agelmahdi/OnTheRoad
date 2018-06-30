@@ -22,8 +22,7 @@ public class TimelineProvider extends ContentProvider {
 
     private static final int PICKS = 100;
     private static final int PICKS_WITH_ID = 101;
-    private static final int USER = 200;
-    private static final int USER_WITH_ID = 201;
+
 
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
@@ -44,8 +43,6 @@ public class TimelineProvider extends ContentProvider {
         uriMatcher.addURI(TimelineContract.AUTHORITY, TimelineContract.PATH_PICKS, PICKS);
         uriMatcher.addURI(TimelineContract.AUTHORITY, TimelineContract.PATH_PICKS + "/#", PICKS_WITH_ID);
 
-        uriMatcher.addURI(TimelineContract.AUTHORITY, TimelineContract.PATH_LOGIN, USER);
-        uriMatcher.addURI(TimelineContract.AUTHORITY, TimelineContract.PATH_LOGIN + "/#", USER_WITH_ID);
 
         return uriMatcher;
     }
@@ -102,15 +99,6 @@ public class TimelineProvider extends ContentProvider {
                         sortOrder);
                 break;
 
-            case USER:
-                retCursor = db.query(TABLE_LOGIN,
-                        projection,
-                        selection,
-                        selectionArgs,
-                        null,
-                        null,
-                        sortOrder);
-                break;
             // Default exception
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -150,16 +138,7 @@ public class TimelineProvider extends ContentProvider {
                 }
                 break;
 
-            case USER:
-                // Insert new values into the database
-                // Inserting values into tasks table
-                long U_id = db.insert(TABLE_LOGIN, null, values);
-                if (U_id > 0) {
-                    returnUri = ContentUris.withAppendedId(TimelineContract.PickEntry.CONTENT_URI_LOGIN, U_id);
-                } else {
-                    throw new android.database.SQLException("Failed to insert row into " + uri);
-                }
-                break;
+
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -193,11 +172,6 @@ public class TimelineProvider extends ContentProvider {
                 tasksDeleted = db.delete(TABLE_NAME, "_id=?", new String[]{id});
                 break;
 
-            case USER:
-                // Get the task ID from the URI path
-                // Use selections/selectionArgs to filter for this ID
-                tasksDeleted = db.delete(TABLE_LOGIN, selection, selectionArgs);
-                break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }

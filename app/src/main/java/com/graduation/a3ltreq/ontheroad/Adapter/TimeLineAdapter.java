@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.graduation.a3ltreq.ontheroad.R;
 import com.graduation.a3ltreq.ontheroad.Fragment.TimeLineFragment;
 
+import java.util.Date;
+
 /**
  * Created by Ahmed El-Mahdi on 2/25/2017.
  */
@@ -20,6 +22,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.MyView
     private Cursor mCursor;
     private final Context mContext;
 
+    private Date date = new Date();
     private final TimelineAdapterOnClickHandler mClickHandler;
 
     public interface TimelineAdapterOnClickHandler {
@@ -36,7 +39,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.MyView
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext)
-                .inflate(R.layout.list_row, parent, false);
+                .inflate(R.layout.list_item_timeline, parent, false);
         return new MyViewHolder(view);
     }
 
@@ -85,10 +88,10 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.MyView
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            name =  itemView.findViewById(R.id.name);
-            description =  itemView.findViewById(R.id.description);
-            duration =  itemView.findViewById(R.id.duration);
-            location =  itemView.findViewById(R.id.location);
+            name =  itemView.findViewById(R.id.user_name);
+            description =  itemView.findViewById(R.id.user_message);
+            duration =  itemView.findViewById(R.id.user_duration);
+            location =  itemView.findViewById(R.id.user_location);
 
             itemView.setOnClickListener(this);
         }
